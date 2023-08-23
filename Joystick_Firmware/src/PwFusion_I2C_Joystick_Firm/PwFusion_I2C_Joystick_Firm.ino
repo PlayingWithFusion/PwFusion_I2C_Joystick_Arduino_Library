@@ -1,12 +1,11 @@
 /***************************************************************************
-* File Name: PwFusion_I2C_Joystick.ino
+* File Name: PwFusion_I2C_Joystick_Firm.ino
 * Processor/Platform: ATtiny841-MMHR (tested)
 * Development Environment: Arduino 2.1.1
 *
-* Designed for use with with Playing With Fusion MAX31865 Resistance
-* Temperature Device (RTD) breakout board: SEN-30201 (PT100 or PT1000)
-*   ---> http://playingwithfusion.com/productview.php?pdid=25
-*   ---> http://playingwithfusion.com/productview.php?pdid=26
+* Designed for use with with Playing With Fusion I2C_Joystick 
+* Device (IFB-40002)
+*   ---> <Insert Link>
 *
 * Copyright � 2023 Playing With Fusion, Inc.
 * SOFTWARE LICENSE AGREEMENT: This code is released under the MIT License.
@@ -36,11 +35,10 @@
 * Playing With Fusion, Inc. invests time and resources developing open-source
 * code. Please support Playing With Fusion and continued open-source
 * development by buying products from Playing With Fusion!
-*
 * **************************************************************************
 * ADDITIONAL NOTES:
-* This file contains functions to flash an AtTiny841-MMHR included in
-* the Playing with Fusion i2c joystick interface board (IFB-40002).
+* This file contains firmware to flash an AtTiny841-MMHR included in
+* the Playing with Fusion I2C joystick interface board (IFB-40002).
 * Funcionality is as described below:
 *   - Read values from joystick componet
 *   - Pack values into a register struct
@@ -50,6 +48,7 @@
 #include <WireS.h>
 #include <ezButton.h>
 
+// Define I2C addresses
 uint8_t primaryAddress = 0x03;
 uint8_t secondaryAddress = 0x04;
 
@@ -79,8 +78,6 @@ volatile memoryMap registerMap = {
 uint8_t *registerPointer = (uint8_t *)&registerMap;
 
 volatile byte registerPosition;
-
-int joystickData[] = {0, 0, 0};
 int btnState;
 
 void setup() {
@@ -92,7 +89,6 @@ void setup() {
 };
 
 void startI2C() {
-
   // Select the i2c address based on the state of the jumper
   if (digitalRead(ADR_SEL) == LOW) {
     Wire.begin(primaryAddress);
@@ -122,6 +118,7 @@ void loop() {
  
 // Gets called when the ATtiny receives an i2c request
 void requestEvent() {
+  // Write the requested value
   Wire.write(*(registerPointer + registerPosition));
 }
 

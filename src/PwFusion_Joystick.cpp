@@ -1,5 +1,5 @@
 /***************************************************************************
-* File Name: Joystick.cpp
+* File Name: PwFusion_Joystick.cpp
 * Processor/Platform: PwFusion R3aktor M0 (tested)
 * Development Environment: Arduino 2.1.1
 *

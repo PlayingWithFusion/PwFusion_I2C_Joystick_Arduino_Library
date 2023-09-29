@@ -1,5 +1,5 @@
 /***************************************************************************
-* File Name: PwFusion_Joystick.cpp
+* File Name: PwFusion_I2C_Joystick_Arduino_Library.h
 * Processor/Platform: PwFusion R3aktor M0 (tested)
 * Development Environment: Arduino 2.1.1
 *
@@ -36,28 +36,31 @@
 * code. Please support Playing With Fusion and continued open-source
 * development by buying products from Playing With Fusion!
 ***************************************************************************/
-#include "PwFusion_Joystick.h"
+
+#ifndef PwFusion_I2C_Joystick_Arduino_Library_h
+#define PwFusion_I2C_Joystick_Arduino_Library_h
+
 #include "Arduino.h"
 #include <PwFusion_Data_Transfer.h>
 
+class Joystick {
 
+  private:
+    uint8_t _adr;
+    DataTransfer* transfer;
 
-Joystick::Joystick() {}
+    uint8_t reg_VRX = 0x00;
+    uint8_t reg_VRY = 0x01;
+    uint8_t reg_SW = 0x02;
+    int _numData = 3;
 
-int Joystick::getVRX() {
-  return transfer->getData(reg_VRX);
-}
+  public:
+    Joystick();
+    int getVRX();
+    int getVRY();
+    int getSW();
+    void begin(uint8_t adr);
 
-int Joystick::getVRY() {
-  return transfer->getData(reg_VRY);
-}
+};
 
-int Joystick::getSW() {
-  return transfer->getData(reg_SW);
-}
-
-void Joystick::begin(uint8_t adr) {
-    _adr = adr;
-    transfer = new DataTransfer();
-    transfer->begin(_adr, _numData);
-}
+#endif

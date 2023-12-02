@@ -49,7 +49,11 @@
 #include <PwFusion_I2C_Joystick_Arduino_Library.h>
 
 // Define address for the i2c joystick
-uint8_t ADR = 0x04;
+uint8_t ADR = 0x05;
+//uint8_t ADR = 0x06;
+//uint8_t ADR = 0x07;
+//uint8_t ADR = 0x08;
+
 
 // Create a new Joystick object
 Joystick joy;
